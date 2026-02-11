@@ -1,0 +1,40 @@
+---
+device_name: dc1-spine1
+loopback0_ip: 10.0.0.1/32
+bgp_asn: 65000
+
+# Interfaces to leaves (eBGP)
+spine_interfaces:
+  - name: Ethernet1
+    remote_device: dc1-leaf1
+    remote_interface: Ethernet1
+    p2p_ip: 10.1.0.0/31
+    bgp_asn: 65101
+  - name: Ethernet2
+    remote_device: dc1-leaf2
+    remote_interface: Ethernet1
+    p2p_ip: 10.1.0.2/31
+    bgp_asn: 65102
+  - name: Ethernet3
+    remote_device: dc1-leaf3
+    remote_interface: Ethernet1
+    p2p_ip: 10.1.0.4/31
+    bgp_asn: 65103
+  - name: Ethernet4
+    remote_device: dc1-leaf4
+    remote_interface: Ethernet1
+    p2p_ip: 10.1.0.6/31
+    bgp_asn: 65104
+
+# Inter-DC eBGP peering with DC2 spines
+inter_dc_interfaces:
+  - name: Ethernet5
+    remote_device: dc2-spine1
+    remote_interface: Ethernet5
+    p2p_ip: 10.3.0.0/31
+    bgp_asn: 65001
+  - name: Ethernet6
+    remote_device: dc2-spine2
+    remote_interface: Ethernet5
+    p2p_ip: 10.3.0.2/31
+    bgp_asn: 65001

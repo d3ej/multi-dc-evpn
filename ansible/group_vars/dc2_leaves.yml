@@ -1,0 +1,21 @@
+---
+# DC2 Leaves - EVPN clients
+type: leaf
+
+leaf_asn_range:
+  start: 65201
+  end: 65204
+
+evpn_clients: true
+
+loopback_range:
+  start: 10
+  end: 13
+
+tenant_vlans:
+  start: 100
+  end: 199
+
+vxlan_source_interface: Loopback0
+symmetric_irb_enabled: true
+mlag_enabled: false

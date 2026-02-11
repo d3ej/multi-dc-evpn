@@ -1,0 +1,12 @@
+---
+# DC2 Spines - Route Reflectors
+type: spine
+spine_asn: 65001
+evpn_route_reflector: true
+
+spine_leaf_interface_range_start: 1
+spine_leaf_interface_range_end: 4
+
+loopback_range:
+  start: 1
+  end: 2

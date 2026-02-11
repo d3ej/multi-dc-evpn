@@ -1,0 +1,128 @@
+---
+- name: Deploy Multi-DC EVPN Fabric
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Start containerlab topology
+      local_action:
+        module: command
+        cmd: containerlab deploy --topo /home/killclaw/multi-dc-evpn/containerlab/clab-topology.yml
+      run_once: yes
+      tags: deploy
+
+    - name: Wait for devices to be ready
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        state: started
+        timeout: 300
+      tags: deploy
+
+    - name: Render device configurations
+      include_role:
+        name: arista.avd.eos_designs
+      tags: render_configs
+
+    - name: Deploy eAPI credentials
+      set_fact:
+        ansible_user: admin
+        ansible_password: admin
+        ansible_become: no
+        ansible_connection: network_cli
+        ansible_network_os: eos
+      tags: deploy
+
+    - name: Configure Loopback interfaces
+      eos_interfaces:
+        config:
+          - name: "Loopback0"
+            state: present
+            ipv4:
+              - address: "{{ loopback0_ip }}"
+          - name: "Loopback1"
+            state: present
+            ipv4:
+              - address: "{{ loopback1_ip | default(omit) }}"
+        state: replaced
+      tags: configure
+
+    - name: Configure Uplink interfaces
+      eos_interfaces:
+        config: "{{ uplink_interfaces }}"
+        state: replaced
+      when: uplink_interfaces is defined
+      tags: configure
+
+    - name: Configure spine interfaces
+      eos_interfaces:
+        config: "{{ spine_interfaces }}"
+        state: replaced
+      when: spine_interfaces is defined
+      tags: configure
+
+    - name: Configure BGP Underlay
+      eos_bgp:
+        config:
+          as_number: "{{ bgp_asn }}"
+          router_id: "{{ loopback0_ip.split('/')[0] }}"
+          neighbors:
+            - neighbor: "{{ item.p2p_ip.split('/')[0] }}"
+              remote_as: "{{ item.bgp_asn }}"
+          networks:
+            - prefix: "{{ loopback0_ip }}"
+        state: present
+      loop: "{{ (uplink_interfaces | default([]) + spine_interfaces | default([])) }}"
+      tags: configure
+
+    - name: Create VLANs
+      eos_vlans:
+        config: "{{ vlans }}"
+        state: present
+      when: vlans is defined
+      tags: configure
+
+    - name: Configure SVI interfaces for EVPN
+      eos_interfaces:
+        config: "{{ svi_interfaces }}"
+        state: present
+      when: svi_interfaces is defined
+      tags: configure
+
+    - name: Configure VXLAN interface
+      eos_interfaces:
+        config:
+          - name: Vxlan1
+            encapsulation:
+              vxlan:
+                vni: "{{ vxlan_vni | default(omit) }}"
+                source: "{{ vxlan_source_interface | default('Loopback0') }}"
+        state: present
+      when: symmetric_irb_enabled is defined
+      tags: configure
+
+    - name: Configure EVPN on spines
+      eos_bgp:
+        config:
+          as_number: "{{ bgp_asn }}"
+          address_family:
+            - afi: evpn
+              neighbors:
+                - neighbor: "{{ item.p2p_ip.split('/')[0] }}"
+                  activate: yes
+        state: present
+      when: evpn_route_reflector is defined
+      tags: configure
+
+    - name: Verify connectivity
+      eos_command:
+        commands:
+          - "show bgp summary"
+          - "show interfaces"
+          - "show vxlan interface"
+      register: verification_output
+      tags: verify
+
+    - name: Display verification results
+      debug:
+        var: verification_output
+      tags: verify

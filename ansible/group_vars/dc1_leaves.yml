@@ -1,0 +1,30 @@
+---
+# DC1 Leaves - EVPN clients
+type: leaf
+
+# eBGP ASN for underlay (leaves in same DC can share)
+leaf_asn_range:
+  start: 65101
+  end: 65104
+
+# EVPN - iBGP to spines (route reflectors)
+evpn_clients: true
+
+# Leaf loopback allocation
+loopback_range:
+  start: 10
+  end: 13
+
+# VLAN/VNI config
+tenant_vlans:
+  start: 100
+  end: 199
+
+# VxLAN tunnel source
+vxlan_source_interface: Loopback0
+
+# Enable Symmetric IRB (inter-tenant routing)
+symmetric_irb_enabled: true
+
+# MLAG disabled per datacenter design
+mlag_enabled: false

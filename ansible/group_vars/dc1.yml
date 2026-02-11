@@ -1,0 +1,25 @@
+---
+# DC1 Common Variables
+fabric_name: DC1_FABRIC
+underlay_routing_protocol: BGP
+overlay_routing_protocol: EVPN
+
+# Underlay BGP
+underlay_bgp_as: 65000
+underlay_bgp_local_as: 65000
+
+# Overlay BGP (EVPN)
+overlay_bgp_as: 65000
+overlay_bgp_local_as: 65000
+
+# P2P subnet for spine-leaf links
+p2p_network_summary:
+  - 10.1.0.0/16
+
+# Loopback IPs for RID
+loopback_network_summary:
+  - 10.0.0.0/24
+
+# VxLAN config
+vxlan_vlan_offset: 1000
+vxlan_port: 4789

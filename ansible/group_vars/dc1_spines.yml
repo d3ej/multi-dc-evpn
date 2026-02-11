@@ -1,0 +1,16 @@
+---
+# DC1 Spines - Route Reflectors
+type: spine
+# eBGP ASNs for underlay peering with leaves
+spine_asn: 65000
+# EVPN RR setup
+evpn_route_reflector: true
+
+# Interface numbering scheme for spine
+spine_leaf_interface_range_start: 1
+spine_leaf_interface_range_end: 4
+
+# Spine loopback allocation
+loopback_range:
+  start: 1
+  end: 2

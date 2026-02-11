@@ -1,0 +1,134 @@
+---
+device_name: dc1-leaf4
+loopback0_ip: 10.0.0.13/32
+loopback1_ip: 10.0.0.113/32
+bgp_asn: 65104
+
+uplink_interfaces:
+  - name: Ethernet1
+    remote_device: dc1-spine1
+    remote_interface: Ethernet4
+    p2p_ip: 10.1.0.7/31
+    bgp_asn: 65000
+  - name: Ethernet2
+    remote_device: dc1-spine2
+    remote_interface: Ethernet4
+    p2p_ip: 10.1.1.7/31
+    bgp_asn: 65000
+
+host_interfaces:
+  - name: Ethernet3
+    host_name: host1-dc1-l4
+    vlan_ids: [130, 131, 132, 133, 134, 140, 141, 142, 143, 144]
+
+tenants:
+  - name: tenant1
+    vlans:
+      - vlan_id: 100
+        name: tenant1-vlan100
+        vni: 10100
+        svi_ip: 192.168.100.4/24
+      - vlan_id: 101
+        name: tenant1-vlan101
+        vni: 10101
+        svi_ip: 192.168.101.4/24
+      - vlan_id: 102
+        name: tenant1-vlan102
+        vni: 10102
+        svi_ip: 192.168.102.4/24
+      - vlan_id: 103
+        name: tenant1-vlan103
+        vni: 10103
+        svi_ip: 192.168.103.4/24
+      - vlan_id: 104
+        name: tenant1-vlan104
+        vni: 10104
+        svi_ip: 192.168.104.4/24
+  - name: tenant2
+    vlans:
+      - vlan_id: 110
+        name: tenant2-vlan110
+        vni: 10110
+        svi_ip: 192.168.110.4/24
+      - vlan_id: 111
+        name: tenant2-vlan111
+        vni: 10111
+        svi_ip: 192.168.111.4/24
+      - vlan_id: 112
+        name: tenant2-vlan112
+        vni: 10112
+        svi_ip: 192.168.112.4/24
+      - vlan_id: 113
+        name: tenant2-vlan113
+        vni: 10113
+        svi_ip: 192.168.113.4/24
+      - vlan_id: 114
+        name: tenant2-vlan114
+        vni: 10114
+        svi_ip: 192.168.114.4/24
+  - name: tenant3
+    vlans:
+      - vlan_id: 120
+        name: tenant3-vlan120
+        vni: 10120
+        svi_ip: 192.168.120.4/24
+      - vlan_id: 121
+        name: tenant3-vlan121
+        vni: 10121
+        svi_ip: 192.168.121.4/24
+      - vlan_id: 122
+        name: tenant3-vlan122
+        vni: 10122
+        svi_ip: 192.168.122.4/24
+      - vlan_id: 123
+        name: tenant3-vlan123
+        vni: 10123
+        svi_ip: 192.168.123.4/24
+      - vlan_id: 124
+        name: tenant3-vlan124
+        vni: 10124
+        svi_ip: 192.168.124.4/24
+  - name: tenant4
+    vlans:
+      - vlan_id: 130
+        name: tenant4-vlan130
+        vni: 10130
+        svi_ip: 192.168.130.4/24
+      - vlan_id: 131
+        name: tenant4-vlan131
+        vni: 10131
+        svi_ip: 192.168.131.4/24
+      - vlan_id: 132
+        name: tenant4-vlan132
+        vni: 10132
+        svi_ip: 192.168.132.4/24
+      - vlan_id: 133
+        name: tenant4-vlan133
+        vni: 10133
+        svi_ip: 192.168.133.4/24
+      - vlan_id: 134
+        name: tenant4-vlan134
+        vni: 10134
+        svi_ip: 192.168.134.4/24
+  - name: tenant5
+    vlans:
+      - vlan_id: 140
+        name: tenant5-vlan140
+        vni: 10140
+        svi_ip: 192.168.140.4/24
+      - vlan_id: 141
+        name: tenant5-vlan141
+        vni: 10141
+        svi_ip: 192.168.141.4/24
+      - vlan_id: 142
+        name: tenant5-vlan142
+        vni: 10142
+        svi_ip: 192.168.142.4/24
+      - vlan_id: 143
+        name: tenant5-vlan143
+        vni: 10143
+        svi_ip: 192.168.143.4/24
+      - vlan_id: 144
+        name: tenant5-vlan144
+        vni: 10144
+        svi_ip: 192.168.144.4/24

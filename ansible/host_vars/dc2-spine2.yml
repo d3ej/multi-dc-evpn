@@ -1,0 +1,38 @@
+---
+device_name: dc2-spine2
+loopback0_ip: 10.0.1.2/32
+bgp_asn: 65001
+
+spine_interfaces:
+  - name: Ethernet1
+    remote_device: dc2-leaf1
+    remote_interface: Ethernet2
+    p2p_ip: 10.2.1.0/31
+    bgp_asn: 65201
+  - name: Ethernet2
+    remote_device: dc2-leaf2
+    remote_interface: Ethernet2
+    p2p_ip: 10.2.1.2/31
+    bgp_asn: 65202
+  - name: Ethernet3
+    remote_device: dc2-leaf3
+    remote_interface: Ethernet2
+    p2p_ip: 10.2.1.4/31
+    bgp_asn: 65203
+  - name: Ethernet4
+    remote_device: dc2-leaf4
+    remote_interface: Ethernet2
+    p2p_ip: 10.2.1.6/31
+    bgp_asn: 65204
+
+inter_dc_interfaces:
+  - name: Ethernet5
+    remote_device: dc1-spine1
+    remote_interface: Ethernet6
+    p2p_ip: 10.3.0.3/31
+    bgp_asn: 65000
+  - name: Ethernet6
+    remote_device: dc1-spine2
+    remote_interface: Ethernet6
+    p2p_ip: 10.3.0.7/31
+    bgp_asn: 65000
