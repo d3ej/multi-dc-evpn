@@ -3,66 +3,66 @@ topology:
   nodes:
     # DC1 Spine switches
     dc1-spine1:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.2
 
     dc1-spine2:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.3
 
     # DC1 Leaf switches
     dc1-leaf1:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.4
 
     dc1-leaf2:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.5
 
     dc1-leaf3:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.6
 
     dc1-leaf4:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.7
 
     # DC2 Spine switches
     dc2-spine1:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.8
 
     dc2-spine2:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.9
 
     # DC2 Leaf switches
     dc2-leaf1:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.10
 
     dc2-leaf2:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.11
 
     dc2-leaf3:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.12
 
     dc2-leaf4:
-      kind: arista
-      image: arista/ceos:latest
+      kind: arista_ceos
+      image: ceos:4.35.1F
       mgmt-ipv4: 172.20.20.13
 
     # Host containers
