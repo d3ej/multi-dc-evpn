@@ -4,7 +4,7 @@
 
 Multi-datacenter VXLAN/EVPN fabric with:
 - Per-DC autonomous systems (AS 65000 for DC1, AS 65001 for DC2)
-- eBGP underlay with BGP unnumbered spine-leaf topology
+- eBGP underlay with numbered /31 spine-leaf P2P links
 - EVPN overlay with per-DC RR (route reflector) architecture
 - Multi-tenant segmentation (5 tenants × 5 VLANs each)
 - Symmetric IRB for inter-tenant routing
@@ -403,7 +403,7 @@ graph LR
    - ASN
    - P2P IPs
 2. Add to containerlab topology
-3. Ansible playbook handles rest
+3. Ansible playbook handles the rest
 
 ### Adding New Tenant
 1. Create new VLAN/VNI ranges in group_vars
@@ -415,8 +415,8 @@ graph LR
 1. Define new fabric AS (65002, 65003, etc.)
 2. Create new group_vars/dc{n}*.yml
 3. Create new host_vars for all devices
-4. Add inter-DC spines peering
-5. Ansible handles deployment
+4. Add inter-DC spine peering
+5. Ansible handles the deployment
 
 ### CloudVision Integration (Future)
 - Onboard devices to CVP
@@ -425,9 +425,9 @@ graph LR
 - Automated rollback on config failure
 
 ### Segment Routing (Future)
-- Replace ECMP with segment routing
-- Enable Traffic Engineering (TE)
-- Implement SR-MPLS or SR-IPv6
+- Add segment routing alongside ECMP
+- Enable traffic engineering (TE)
+- Implement SR-MPLS or SRv6
 
 ---
 
@@ -452,21 +452,20 @@ graph LR
 
 ### Stress Tests (future)
 ```
-✓ 1000+ MAC addresses per VLAN
-✓ Convergence time after spine failure
-✓ Data plane traffic during reconvergence
+○ 1000+ MAC addresses per VLAN
+○ Convergence time after spine failure
+○ Data plane traffic during reconvergence
 ```
 
 ---
 
 ## References
 
-- [RFC 7432: BGP MPLS-Based Ethernet VPN (EVPN)](https://tools.ietf.org/html/rfc7432)
-- [RFC 8365: A Unified Control Plane for EVPN Data Centers](https://tools.ietf.org/html/rfc8365)
-- [Arista EVPN Configuration Guide](https://www.arista.com/)
-- [Network Programmability with Arista](https://www.arista.com/)
+- [RFC 8365: A Network Virtualization Overlay Solution Using EVPN](https://tools.ietf.org/html/rfc8365) — VXLAN data plane for EVPN
+- [RFC 7432: BGP MPLS-Based Ethernet VPN](https://tools.ietf.org/html/rfc7432) — EVPN control plane
+- [Arista AVD Documentation](https://avd.sh/)
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** February 2026
+**Document Version:** 1.1  
+**Last Updated:** March 2026

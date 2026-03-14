@@ -86,28 +86,6 @@ L3 VRF:  VLAN 999,   VNI 999
 
 ---
 
-## File Locations
-
-```
-~/multi-dc-evpn/
-├── ansible/
-│   ├── inventory.yml          → Device list
-│   ├── deploy.yml            → Main playbook
-│   ├── group_vars/           → DC/role config
-│   └── host_vars/            → Device config
-├── containerlab/
-│   └── clab-topology.yml     → Topology
-├── tests/
-│   └── test_fabric.py        → Validation
-├── docs/
-│   ├── README.md             → Main guide
-│   ├── DESIGN.md             → Architecture
-│   └── TROUBLESHOOTING.md    → Fixes
-└── deploy.sh                 → Quick deploy
-```
-
----
-
 ## Ansible Quick Commands
 
 ```bash
@@ -261,43 +239,6 @@ docker ps | grep dc1-spine1
 
 ---
 
-## File Edit Quick Guide
-
-```bash
-# Edit inventory
-nano ansible/inventory.yml
-
-# Edit DC1 config
-nano ansible/group_vars/dc1.yml
-
-# Edit specific leaf
-nano ansible/host_vars/dc1-leaf1.yml
-
-# Edit topology
-nano containerlab/clab-topology.yml
-
-# Edit deployment playbook
-nano ansible/deploy.yml
-
-# Edit tests
-nano tests/test_fabric.py
-```
-
----
-
-## Important Notes
-
-- **Credentials:** Username=admin, Password=admin
-- **Device Type:** Arista cEOS (containerlab)
-- **BGP AS Numbers:** DC1=65000, DC2=65001
-- **VXLAN Port:** 4789 (standard)
-- **Management Network:** 172.20.20.0/24
-- **Underlay DC1:** 10.1.0.0/16
-- **Underlay DC2:** 10.2.0.0/16
-- **Inter-DC:** 10.3.0.0/16
-
----
-
 ## Expected Output Examples
 
 ### Successful BGP Session
@@ -341,5 +282,5 @@ VTEP Address      Tunnel Name       Src Intf   Src IP
 
 ---
 
-**Last Updated:** February 2026  
+**Last Updated:** March 2026  
 **Print this for quick reference!**

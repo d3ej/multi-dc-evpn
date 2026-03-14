@@ -471,5 +471,5 @@ Thank you for contributing! 🎉
 
 ---
 
-**Guidelines Version:** 1.0  
-**Last Updated:** February 2026
+**Guidelines Version:** 1.1  
+**Last Updated:** March 2026

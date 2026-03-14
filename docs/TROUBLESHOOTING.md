@@ -16,9 +16,11 @@ sudo usermod -aG docker $USER
 #### Problem: `error when calling POST /containers/create: OCI runtime error`
 **Solution:**
 ```bash
-# Insufficient resources or cEOS image not available
-docker pull arista/ceos:latest
-# Or reduce container count in clab-topology.yml
+# Insufficient resources, or the cEOS image is not imported.
+# cEOS must be downloaded from arista.com and imported manually:
+docker import cEOS64-lab-<version>.tar.xz ceos64:latest
+
+# Or reduce the container count in clab-topology.yml
 ```
 
 #### Problem: Devices stuck in "created" state
@@ -46,7 +48,7 @@ docker ps | grep clab-multi-dc-evpn
 # Check container logs
 docker logs clab-multi-dc-evpn-dc1-spine1
 
-# If still failing, device may have crashed - check image
+# If still failing, the device may have crashed — check the logs
 docker logs clab-multi-dc-evpn-dc1-spine1 | tail -50
 ```
 
@@ -224,8 +226,8 @@ VTEP Address      Tunnel Name       Src Intf   Src IP          Index  RxPkts  Tx
 
 **Solution:**
 ```bash
-# VXLAN tunnels created dynamically via EVPN learning
-# If empty, means no remote VTEPs learned yet
+# VXLAN tunnels are created dynamically via EVPN learning.
+# If empty, no remote VTEPs have been learned yet.
 
 # Check EVPN routes
 show bgp evpn route-type inclusive-multicast
@@ -321,8 +323,8 @@ show vlan
 #### Problem: `fatal: [dc1-spine1]: FAILED! => Connection refused`
 **Solution:**
 ```bash
-# Playbook can't reach device
-# Ensure devices are running and IPs correct
+# Playbook can't reach the device.
+# Ensure devices are running and IPs are correct.
 
 # Check inventory
 ansible-inventory -i ansible/inventory.yml --graph
@@ -338,8 +340,8 @@ ansible all -i ansible/inventory.yml -m ping
 #### Problem: `fatal: [dc1-spine1]: FAILED! => 'ascii' codec can't decode byte`
 **Solution:**
 ```bash
-# Usually means device returned non-ASCII characters
-# Could be buffer issue or config error
+# Usually means the device returned non-ASCII characters.
+# Could be a buffer issue or a config error.
 
 # Check device config manually:
 ssh admin@172.20.20.2
@@ -359,7 +361,7 @@ ansible-playbook -i ansible/inventory.yml ansible/deploy.yml -vvv
 ssh admin@172.20.20.2
 show running-config interface Ethernet1
 
-# If config missing, may need manual push or fix playbook
+# If the config is missing, you may need to push it manually or fix the playbook.
 
 # Re-run playbook:
 cd ansible
@@ -389,8 +391,8 @@ show bgp summary
 #### Problem: `VXLAN tunnel between DCs not working` (ping test fails)
 **Solution:**
 ```bash
-# Test assumes full VXLAN connectivity
-# But tunnel takes time to establish
+# This test assumes full VXLAN connectivity,
+# but tunnels take time to establish.
 
 # Manually check:
 ssh admin@172.20.20.4  # dc1-leaf1
@@ -489,7 +491,7 @@ show bgp ipv4 unicast summary
 cd containerlab
 containerlab destroy --topo clab-topology.yml --cleanup
 docker system prune -a
-docker pull arista/ceos:latest
+# Verify the cEOS image is imported: docker images | grep ceos64
 containerlab deploy --topo clab-topology.yml
 ```
 
@@ -532,7 +534,7 @@ cd containerlab
 
 ### Optimization Tips
 - Enable `router bgp graceful-restart` for graceful failover
-- Use BGP prefix-length for faster convergence
+- Tune BGP timers for faster convergence
 - Monitor BGP RIB size: `show bgp memory`
 
 ---
@@ -541,7 +543,7 @@ cd containerlab
 
 - Containerlab Docs: https://containerlab.dev
 - Arista cEOS: https://www.arista.com/en/support/containered-eos
-- BGP EVPN RFC: https://tools.ietf.org/html/rfc7432
+- EVPN/VXLAN RFC: https://tools.ietf.org/html/rfc8365
 - Ansible Docs: https://docs.ansible.com
 
-**Last Updated:** February 2026
+**Last Updated:** March 2026
