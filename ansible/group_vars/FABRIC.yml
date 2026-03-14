@@ -1,10 +1,29 @@
 ---
 fabric_name: FABRIC
+
+# Management settings for containerlab cEOS
+mgmt_interface_vrf: default
+management_eapi:
+  enabled: true
+
+# Local users
+aaa_settings:
+  local_users:
+    - name: admin
+      privilege: 15
+      role: network-admin
+      sha512_password: "$6$QGA2UGA.kd.916Bj$Ul1KFJ59voFJj/inCLlyctofGNXk..i4R1gNI8rydGWbza8js25k2pxVn44qB22Ma2b4isEEOglVJ3p.iLEQK0"
+
+# Override cEOSLab platform default to use Management0 (containerlab)
+platform_settings:
+  - platforms: [cEOSLab]
+    management_interface: Management0
+
 l3_edge:
   p2p_links_ip_pools:
     - name: DCI_P2P_POOL
       ipv4_pool: 10.3.0.0/24
-      network:
+
 # Ansible connection settings
 ansible_connection: ansible.netcommon.httpapi
 ansible_network_os: arista.eos.eos

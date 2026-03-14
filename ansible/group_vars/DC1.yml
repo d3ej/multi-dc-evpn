@@ -3,7 +3,7 @@ mgmt_gateway: 172.20.20.1
 
 spine:
   defaults:
-    platform: vEOS-lab
+    platform: cEOSLab
     bgp_as: "65000"
     loopback_ipv4_pool: 10.0.0.0/24
   nodes:
@@ -16,7 +16,7 @@ spine:
 
 l3leaf:
   defaults:
-    platform: vEOS-lab
+    platform: cEOSLab
     loopback_ipv4_pool: 10.0.0.0/24
     loopback_ipv4_offset: 9
     vtep_loopback_ipv4_pool: 10.0.0.128/25

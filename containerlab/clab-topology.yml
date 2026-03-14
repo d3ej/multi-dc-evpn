@@ -1,5 +1,8 @@
 name: multi-dc-evpn
 topology:
+  kinds:
+    arista_ceos:
+      startup-config: startup-config.cfg
   nodes:
     # DC1 Spine switches
     dc1-spine1:

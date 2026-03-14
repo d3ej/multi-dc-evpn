@@ -1,44 +1,14 @@
 ---
-- name: Build EVPN Fabric Configurations
-  hosts: all
-  gather_facts: no
+- name: Build Configs
+  hosts: FABRIC
+  gather_facts: false
   tasks:
-    
-    - name: Generate EOS device configurations
-      block:
-        - name: Create structured variables for device
-          set_fact:
-            device_config: |
-              hostname {{ inventory_hostname }}
-              !
-              interface Management0
-              ip address {{ ansible_host }}/24
-              !
-              no ip routing
-          tags: build
 
-        - name: Create output directory
-          file:
-            path: "{{ playbook_dir }}/configs"
-            state: directory
-          run_once: yes
-          tags: build
+    - name: Generate AVD Structured Configurations and Fabric Documentation
+      ansible.builtin.import_role:
+        name: arista.avd.eos_designs
 
-        - name: Write config to file
-          copy:
-            content: "{{ device_config }}"
-            dest: "{{ playbook_dir }}/configs/{{ inventory_hostname }}.conf"
-          tags: build
+    - name: Generate Device Configurations and Documentation
+      ansible.builtin.import_role:
+        name: arista.avd.eos_cli_config_gen
 
-- name: Deploy Configurations to Devices
-  hosts: all
-  gather_facts: no
-  tasks:
-    
-    - name: Push configuration to device
-      arista.eos.eos_config:
-        lines:
-          - "hostname {{ inventory_hostname }}"
-        save_when: modified
-      tags: deploy
-      

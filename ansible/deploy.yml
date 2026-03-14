@@ -1,32 +1,17 @@
 ---
-- name: Generate AVD Configurations
+- name: Build and Deploy Configs
   hosts: FABRIC
-  gather_facts: no
+  gather_facts: false
   tasks:
-    - name: Generate structured configs and documentation
-      include_role:
+
+    - name: Generate AVD Structured Configurations and Fabric Documentation
+      ansible.builtin.import_role:
         name: arista.avd.eos_designs
-      tags: render_configs
 
-    - name: Generate device configurations
-      include_role:
+    - name: Generate Device Configurations and Documentation
+      ansible.builtin.import_role:
         name: arista.avd.eos_cli_config_gen
-      tags: render_configs
 
-- name: Deploy Configurations
-  hosts: FABRIC
-  gather_facts: no
-  tasks:
-    - name: Deploy configurations to devices
-      include_role:
+    - name: Deploy Configurations to Devices
+      ansible.builtin.import_role:
         name: arista.avd.eos_config_deploy_eapi
-      tags: deploy_configs
-
-- name: Validate Deployment
-  hosts: FABRIC
-  gather_facts: no
-  tasks:
-    - name: Validate network state
-      include_role:
-        name: arista.avd.eos_validate_state
-      tags: verify
