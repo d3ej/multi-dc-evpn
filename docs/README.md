@@ -1,6 +1,6 @@
 # Multi-DC EVPN Fabric
 
-Multi-datacenter VXLAN/EVPN fabric — Arista AVD, Ansible, Containerlab.
+Multi-datacenter VXLAN/EVPN fabric — Arista AVD and Containerlab.
 
 **2 DCs** | eBGP underlay | EVPN overlay (spines as RRs) | Redundant spine-to-spine DCI | Symmetric IRB
 

@@ -8,7 +8,7 @@ Multi-datacenter VXLAN/EVPN fabric with:
 - EVPN overlay with per-DC RR (route reflector) architecture
 - Multi-tenant segmentation (5 tenants × 5 VLANs each)
 - Symmetric IRB for inter-tenant routing
-- Full infrastructure-as-code with Ansible/AVD
+- Full infrastructure-as-code with Arista AVD
 - Containerlab-based testing and validation
 
 ---
