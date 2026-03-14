@@ -1,6 +1,6 @@
 ---
 # DC2 Common Variables
-fabric_name: DC2_FABRIC
+fabric_name: FABRIC
 underlay_routing_protocol: BGP
 overlay_routing_protocol: EVPN
 
