@@ -38,6 +38,24 @@ check_deps() {
     echo ""
 }
 
+# Fix graphite topology data format
+fix_graphite() {
+    local topo_json="$CLAB_DIR/clab-multi-dc-evpn/topology-data.json"
+    if [ -f "$topo_json" ]; then
+        echo "[*] Fixing graphite topology data format..."
+        python3 -c "
+import json
+with open('$topo_json', 'r') as f:
+    data = json.load(f)
+data['links'] = [l.get('endpoints', l) for l in data['links']]
+with open('$topo_json', 'w') as f:
+    json.dump(data, f, indent=2)
+"
+        docker restart clab-multi-dc-evpn-graphite 2>/dev/null && \
+            echo "✓ Graphite restarted" || true
+    fi
+}
+
 # Deploy topology
 deploy_topology() {
     echo "[*] Deploying containerlab topology..."
@@ -49,6 +67,9 @@ deploy_topology() {
         echo "❌ Failed to deploy topology"
         exit 1
     fi
+    
+    fix_graphite
+    echo "✓ Graphite topology viewer: http://localhost:8080/graphite/"
     
     echo "[*] Waiting for devices to stabilize (30 seconds)..."
     sleep 30

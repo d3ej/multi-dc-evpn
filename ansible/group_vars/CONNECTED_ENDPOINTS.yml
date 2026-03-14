@@ -1,0 +1,17 @@
+---
+# Connected endpoints / server port profiles
+# Add server-facing port definitions here as needed
+
+# port_profiles:
+#   - profile: TRUNK_PROFILE
+#     mode: trunk
+
+# servers:
+#   - name: host1-dc1-l1
+#     adapters:
+#       - endpoint_ports: [eth0]
+#         switch_ports: [Ethernet3]
+#         switches: [dc1-leaf1]
+#         vlans: "100-104"
+#         mode: trunk
+#         profile: TRUNK_PROFILE

@@ -144,7 +144,7 @@ multi-dc-evpn/
 │       ├── dc2-spine2.yml
 │       └── dc2-leaf[1-4].yml
 ├── containerlab/
-│   └── clab-topology.yml      # Containerlab topology definition
+│   └── clab-topology.yml      # Containerlab topology definition (includes Graphite visualizer)
 ├── tests/
 │   └── test_fabric.py         # Network validation tests (pytest)
 ├── docs/
@@ -179,10 +179,13 @@ pip3 install ansible netmiko paramiko pytest pyyaml
 2. **Deploy topology:**
    ```bash
    cd containerlab
-   containerlab deploy --topo clab-topology.yml
+   sudo clab deploy -t clab-topology.yml
    ```
 
-3. **Verify connectivity:**
+3. **View topology diagram:**
+   Open [http://localhost:8080/graphite/](http://localhost:8080/graphite/) for an interactive topology visualization (powered by Graphite/Netreplica).
+
+4. **Verify connectivity:**
    ```bash
    # Check device accessibility
    containerlab inspect -t clab-topology.yml
@@ -280,6 +283,7 @@ pytest tests/test_fabric.py -v --tb=short
 - **CI/CD ready:** Easy integration with GitHub Actions/GitLab CI
 - **Cost-free:** No need for physical hardware
 - **Realistic:** Arista cEOS containers behave like real devices
+- **Graphite visualizer:** Interactive topology diagram at `http://localhost:8080/graphite/`
 
 ### AVD (Arista Validated Design) Alignment
 - **Role-based:** Spine and leaf roles with distinct configs

@@ -66,6 +66,26 @@ check_prerequisites() {
     print_success "Python dependencies installed"
 }
 
+# Fix graphite topology data format
+# Newer containerlab versions wrap links in {"endpoints": {...}} but graphite expects flat {"a": ..., "z": ...}
+fix_graphite() {
+    local topo_json="$CLAB_DIR/clab-multi-dc-evpn/topology-data.json"
+    if [ -f "$topo_json" ]; then
+        print_info "Fixing graphite topology data format..."
+        python3 -c "
+import json
+with open('$topo_json', 'r') as f:
+    data = json.load(f)
+data['links'] = [l.get('endpoints', l) for l in data['links']]
+with open('$topo_json', 'w') as f:
+    json.dump(data, f, indent=2)
+print(f'Fixed {len(data[\"links\"])} links')
+"
+        docker restart clab-multi-dc-evpn-graphite 2>/dev/null && \
+            print_success "Graphite restarted with fixed topology data" || true
+    fi
+}
+
 # Deploy topology
 deploy_topology() {
     print_header "Deploying Containerlab Topology"
@@ -74,7 +94,10 @@ deploy_topology() {
     print_info "Starting containerlab topology..."
     containerlab deploy --topo clab-topology.yml
     
+    fix_graphite
+    
     print_success "Topology deployed successfully"
+    print_info "Graphite topology viewer: http://localhost:8080/graphite/"
     print_info "Waiting 30 seconds for devices to stabilize..."
     sleep 30
 }

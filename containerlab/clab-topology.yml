@@ -6,69 +6,121 @@ topology:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.2
+      group: dc1-spines
+      labels:
+        graph-level: 1
+        graph-icon: switch
 
     dc1-spine2:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.3
+      group: dc1-spines
+      labels:
+        graph-level: 1
+        graph-icon: switch
 
     # DC1 Leaf switches
     dc1-leaf1:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.4
+      group: dc1-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     dc1-leaf2:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.5
+      group: dc1-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     dc1-leaf3:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.6
+      group: dc1-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     dc1-leaf4:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.7
+      group: dc1-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     # DC2 Spine switches
     dc2-spine1:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.8
+      group: dc2-spines
+      labels:
+        graph-level: 1
+        graph-icon: switch
 
     dc2-spine2:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.9
+      group: dc2-spines
+      labels:
+        graph-level: 1
+        graph-icon: switch
 
     # DC2 Leaf switches
     dc2-leaf1:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.10
+      group: dc2-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     dc2-leaf2:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.11
+      group: dc2-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     dc2-leaf3:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.12
+      group: dc2-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     dc2-leaf4:
       kind: arista_ceos
       image: ceos64
       mgmt-ipv4: 172.20.20.13
+      group: dc2-leafs
+      labels:
+        graph-level: 2
+        graph-icon: switch
 
     # Host containers
     host1-dc1-l1:
       kind: linux
       image: alpine:latest
+      group: dc1-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.100.10/24 dev eth1
         - ip route add default via 192.168.100.1
@@ -76,6 +128,10 @@ topology:
     host1-dc1-l2:
       kind: linux
       image: alpine:latest
+      group: dc1-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.100.11/24 dev eth1
         - ip route add default via 192.168.100.1
@@ -83,6 +139,10 @@ topology:
     host1-dc1-l3:
       kind: linux
       image: alpine:latest
+      group: dc1-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.120.10/24 dev eth1
         - ip route add default via 192.168.120.1
@@ -90,6 +150,10 @@ topology:
     host1-dc1-l4:
       kind: linux
       image: alpine:latest
+      group: dc1-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.140.10/24 dev eth1
         - ip route add default via 192.168.140.1
@@ -97,6 +161,10 @@ topology:
     host1-dc2-l1:
       kind: linux
       image: alpine:latest
+      group: dc2-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.100.20/24 dev eth1
         - ip route add default via 192.168.100.5
@@ -104,6 +172,10 @@ topology:
     host1-dc2-l2:
       kind: linux
       image: alpine:latest
+      group: dc2-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.100.21/24 dev eth1
         - ip route add default via 192.168.100.6
@@ -111,6 +183,10 @@ topology:
     host1-dc2-l3:
       kind: linux
       image: alpine:latest
+      group: dc2-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.120.20/24 dev eth1
         - ip route add default via 192.168.120.7
@@ -118,10 +194,28 @@ topology:
     host1-dc2-l4:
       kind: linux
       image: alpine:latest
+      group: dc2-hosts
+      labels:
+        graph-level: 3
+        graph-icon: host
       exec:
         - ip addr add 192.168.140.20/24 dev eth1
         - ip route add default via 192.168.140.8
-
+        
+    graphite:
+      kind: linux
+      image: netreplica/graphite:latest
+      env:
+        CLAB_SSH_CONNECTION: ${SSH_CONNECTION}
+      binds:
+        - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+        - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+      ports:
+        - 8080:80
+      exec:
+        - sh -c 'graphite_motd.sh 8080'
+      labels:
+        graph-hide: yes
   links:
     # DC1 Spine-Leaf
     - endpoints: ["dc1-spine1:eth1", "dc1-leaf1:eth1"]

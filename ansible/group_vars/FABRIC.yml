@@ -1,10 +1,16 @@
 ---
 fabric_name: FABRIC
-ansible_connection: network_cli
+l3_edge:
+  p2p_links_ip_pools:
+    - name: DCI_P2P_POOL
+      ipv4_pool: 10.3.0.0/24
+      network:
+# Ansible connection settings
+ansible_connection: ansible.netcommon.httpapi
 ansible_network_os: arista.eos.eos
 ansible_user: admin
 ansible_password: admin
+ansible_become: true
 ansible_become_method: enable
-ansible_httpapi_port: 443
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false

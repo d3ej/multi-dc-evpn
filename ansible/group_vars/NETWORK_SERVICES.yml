@@ -1,0 +1,136 @@
+---
+tenants:
+  - name: TENANT1
+    mac_vrf_vni_base: 10000
+    vrfs:
+      - name: TENANT1
+        vrf_vni: 1
+        svis:
+          - id: 100
+            name: tenant1-vlan100
+            enabled: true
+            ip_address_virtual: 192.168.100.1/24
+          - id: 101
+            name: tenant1-vlan101
+            enabled: true
+            ip_address_virtual: 192.168.101.1/24
+          - id: 102
+            name: tenant1-vlan102
+            enabled: true
+            ip_address_virtual: 192.168.102.1/24
+          - id: 103
+            name: tenant1-vlan103
+            enabled: true
+            ip_address_virtual: 192.168.103.1/24
+          - id: 104
+            name: tenant1-vlan104
+            enabled: true
+            ip_address_virtual: 192.168.104.1/24
+
+  - name: TENANT2
+    mac_vrf_vni_base: 10000
+    vrfs:
+      - name: TENANT2
+        vrf_vni: 2
+        svis:
+          - id: 110
+            name: tenant2-vlan110
+            enabled: true
+            ip_address_virtual: 192.168.110.1/24
+          - id: 111
+            name: tenant2-vlan111
+            enabled: true
+            ip_address_virtual: 192.168.111.1/24
+          - id: 112
+            name: tenant2-vlan112
+            enabled: true
+            ip_address_virtual: 192.168.112.1/24
+          - id: 113
+            name: tenant2-vlan113
+            enabled: true
+            ip_address_virtual: 192.168.113.1/24
+          - id: 114
+            name: tenant2-vlan114
+            enabled: true
+            ip_address_virtual: 192.168.114.1/24
+
+  - name: TENANT3
+    mac_vrf_vni_base: 10000
+    vrfs:
+      - name: TENANT3
+        vrf_vni: 3
+        svis:
+          - id: 120
+            name: tenant3-vlan120
+            enabled: true
+            ip_address_virtual: 192.168.120.1/24
+          - id: 121
+            name: tenant3-vlan121
+            enabled: true
+            ip_address_virtual: 192.168.121.1/24
+          - id: 122
+            name: tenant3-vlan122
+            enabled: true
+            ip_address_virtual: 192.168.122.1/24
+          - id: 123
+            name: tenant3-vlan123
+            enabled: true
+            ip_address_virtual: 192.168.123.1/24
+          - id: 124
+            name: tenant3-vlan124
+            enabled: true
+            ip_address_virtual: 192.168.124.1/24
+
+  - name: TENANT4
+    mac_vrf_vni_base: 10000
+    vrfs:
+      - name: TENANT4
+        vrf_vni: 4
+        svis:
+          - id: 130
+            name: tenant4-vlan130
+            enabled: true
+            ip_address_virtual: 192.168.130.1/24
+          - id: 131
+            name: tenant4-vlan131
+            enabled: true
+            ip_address_virtual: 192.168.131.1/24
+          - id: 132
+            name: tenant4-vlan132
+            enabled: true
+            ip_address_virtual: 192.168.132.1/24
+          - id: 133
+            name: tenant4-vlan133
+            enabled: true
+            ip_address_virtual: 192.168.133.1/24
+          - id: 134
+            name: tenant4-vlan134
+            enabled: true
+            ip_address_virtual: 192.168.134.1/24
+
+  - name: TENANT5
+    mac_vrf_vni_base: 10000
+    vrfs:
+      - name: TENANT5
+        vrf_vni: 5
+        svis:
+          - id: 140
+            name: tenant5-vlan140
+            enabled: true
+            ip_address_virtual: 192.168.140.1/24
+          - id: 141
+            name: tenant5-vlan141
+            enabled: true
+            ip_address_virtual: 192.168.141.1/24
+          - id: 142
+            name: tenant5-vlan142
+            enabled: true
+            ip_address_virtual: 192.168.142.1/24
+          - id: 143
+            name: tenant5-vlan143
+            enabled: true
+            ip_address_virtual: 192.168.143.1/24
+          - id: 144
+            name: tenant5-vlan144
+            enabled: true
+            ip_address_virtual: 192.168.144.1/24
