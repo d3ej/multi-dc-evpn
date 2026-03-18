@@ -5,7 +5,6 @@ Tests BGP, VXLAN, EVPN, and inter-DC reachability
 import pytest
 from netmiko import ConnectHandler
 from paramiko.ssh_exception import SSHException, AuthenticationException
-import time
 
 
 class NetworkFabric:
